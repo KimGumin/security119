@@ -1,77 +1,106 @@
-#include <stdio.h>	// 기본 
-#include <string.h>	// 글자처리 
-#include <process.h> // system("cls")
+#include <stdio.h>   // 기본 
+#include <string.h>   // 글자처리 
+#include <process.h> // system("cls") 사용을 위해 
 #include <stdlib.h> // 파일 
 #include <conio.h> 
 #include <dos.h>
-struct Contact{
-	long digits;
-	char name[20], address[20], email[25];
+struct Contact{   // 연락처 구조체(자바로치면 클래스) 
+   long digits; // 번호 
+   char name[20], address[20], email[25]; 
 } list;
 
-char query[20],name[20];
+char query[20],name[20]; 
 FILE *fp, *ft;
 int mode,i,n,l,found;
 
+// 함수 개요선언 
 void add();
-
 void search();
 void edit();
 void del();
+void easter_egg();
+
 int main(void){
-	// 초기화면설정
+   // 초기화면설정
 main:
-	system("cls");    /* ************Main menu ***********************  */
+   system("cls");    /* ************Main menu ***********************  */
     printf("\n\t **** Welcome to Contact Management System ****");
     printf("\n\n\n\t\t\tMAIN MENU\n\t\t=====================\n\t\t[1] Add a new Contact\n\t\t[2] List all Contacts\n\t\t[3] Search for contact\n\t\t[4] Edit a Contact\n\t\t[5] Delete a Contact\n\t\t[0] Exit\n\t\t=====================\n\t\t");
     printf("Enter the choice:"); 
-	scanf("%d", &mode);
-	
-	switch(mode){
-		case 0:
-			printf("\n\n\t\tAre you sure you want to exit?");
-			break;
-			
-		case 1:
-			add();
-			break;
-			
-		case 2:
-			
-			break;
-			
-		case 3:
-			search();
-			break;
-			
-		case 4:
-			edit();
-			break;
-			
-		case 5:
-			
-			break;	
-	}
-	printf("\n\t\t[1] Main Menu\t[0] Exit\n");
-	printf("\t\tEnter the choice : ");
-	scanf("%d", &mode);
-	if(mode == 0)
-		return 0;
-    else if(mode == 1)
-        goto main;	
+   scanf("%d", &mode);   // 입력받은숫자에 따라 모드 변경 
+   
+   switch(mode){
+      case 0:   // 종료시 
+         printf("\n\n\t\tAre you sure you want to exit?");
+         break;
+         
+      case 1: // 연락처 추가시 
+         add();
+         break;
+         
+      case 2:   // 연락처 나열시 
+         
+         break;
+         
+      case 3:   // 연락처 검색시 
+         search();
+         break;
+         
+      case 4:   // 연락처 편집시 
+         edit();
+         break;
+         
+      case 5:   // 연락서 삭제시 
+         del();
+         break;   
+      case 92536395:
+         easter_egg();
+         
+         printf("\t\t\t\t개발자 정보\n");
+         printf("\t\t===========================================\n");
+         printf("\t\t이름 : 김 구 민\n");
+         printf("\t\t메일 : gumin6395@naver.com\n");
+         printf("\t\t소개 : 안녕하세요\n\n");
+         printf("\t\t이름 : 이 승 준\n");
+         printf("\t\t메일 : dltmdwns3462@naver.com\n");
+         printf("\t\t소개 : 안녕하세요\n");
+         break;
+      case 96613462:
+         easter_egg();
+         
+         printf("\t\t\t\t개발자 정보\n");
+         printf("\t\t===========================================\n");
+         printf("\t\t이름 : 김 구 민\n");
+         printf("\t\t메일 : gumin6395@naver.com\n");
+         printf("\t\t소개 : 안녕하세요\n\n");
+         printf("\t\t이름 : 이 승 준\n");
+         printf("\t\t메일 : dltmdwns3462@naver.com\n");
+         printf("\t\t소개 : 안녕하세요\n");
+         break;
+   }
+   
+   // 서비스가 끝난후 메인메뉴로 넘어갈지 종료할지 
+   printf("\t\t===========================================\n");
+   printf("\n\t\t[1] Main Menu\t[0] Exit\n");
+   printf("\t\tEnter the choice : ");
+   scanf("%d", &mode);
+   if(mode == 0)
+      return 0;
+    else if(mode == 1)   // 1을 입력시 다시 main으로 리턴 
+        goto main;   
 }
 
 // 연락처추가 
-void add(){	
-	system("cls");
-        fp=fopen("contact.dll","a");
+void add(){   
+   system("cls");   // cmd에서 cls(clear)입력 
+        fp=fopen("contact.dll","a");   // contact 데이터파일 open 
 
         for (;;) { 
-            fflush(stdin);
-            printf("To exit enter blank space in the name input\nName (Use identical):");
-            scanf("%[^\n]",&list.name);
+            fflush(stdin);   // 입력버퍼비우기 
+            printf("To exit enter blank space in the name input\nName (Use identical):");   
+            scanf("%[^\n]",&list.name);   // 파일안에입력 
 
-            if(stricmp(list.name,"")==0 || stricmp(list.name," ")==0)
+            if(stricmp(list.name,"")==0 || stricmp(list.name," ")==0)   // 공백만입력시 입력종료 
                 break;
                 
             fflush(stdin);
@@ -91,44 +120,45 @@ void add(){
 
 // 연락처검색 
 void search(){
-	system("cls");
-	do{
-		found = 0;
-		printf("\n\n\t..::CONTACT SEARCH\n\t===========================\n\t..::Name of contact to search: ");
-		fflush(stdin);
-		scanf("%[^\n]",&query);
-		l = strlen(query);
-		fp = fopen("contact.dll", "r");
-		system("cls");
-		printf("\n\n..::Search result for '%s' \n===================================================\n",query);
-		
-		while(fread(&list, sizeof(list), 1, fp)==1){
-			for(i = 0; i <= l; i++)
-				name[i] = list.name[i];
-			if(strcmp(name, query) == 0){
-				printf("\n..::Name\t: %s\n..::Phone\t: %ld\n..::Address\t: %s\n..::Email\t: %s\n",list.name,list.digits,list.address,list.email);
+   system("cls");
+   do{
+      found = 0;
+      printf("\n\n\t..::CONTACT SEARCH\n\t===========================\n\t..::Name of contact to search: ");
+      fflush(stdin);
+      scanf("%[^\n]",&query);
+      l = strlen(query);
+      fp = fopen("contact.dll", "r");
+      system("cls");
+      printf("\n\n..::Search result for '%s' \n===================================================\n",query);
+      
+      while(fread(&list, sizeof(list), 1, fp)==1){   // 검색하고자하는 연락처 출력 
+         for(i = 0; i <= l; i++)
+            name[i] = list.name[i];
+         if(strcmp(name, query) == 0){
+            printf("\n..::Name\t: %s\n..::Phone\t: %ld\n..::Address\t: %s\n..::Email\t: %s\n",list.name,list.digits,list.address,list.email);
                 found++;
                 
                 if(found % 4 == 0){
-					printf("..::Press any key to continue...");
+               printf("..::Press any key to continue...");
                     getch();
-				}
-			}
-			
-			if(found==0)
+            }
+         }
+         
+         if(found==0)
                 printf("\n..::No match found!");
             else
                 printf("\n..::%d match(s) found!",found);
             fclose(fp);
-            printf("\n ..::Try again?\n\n\t[1] Yes\t\t[0] No\n\t");
+            printf("\n===================================================\n");
+            printf("\n\n\t\t..::Try again?\n\n\t\t[1] Yes\t\t[0] No\n\t\t");
             scanf("%d",&mode);
-		}
-	}while(mode == 1);
+      }
+   }while(mode == 1);
 } 
 
 // 연락처편집
 void edit(){
-	system("cls");
+   system("cls");
     fp=fopen("contact.dll","r");
     ft=fopen("temp.dat","w");
     fflush(stdin);
@@ -160,3 +190,43 @@ void edit(){
     remove("contact.dll");
     rename("temp.dat","contact.dll");
 } 
+
+void del(){
+   char d_name[20];
+   
+   system("cls");
+   printf("\t\t=================================\n");
+   printf("\t\tEnter the name of contact to delete : ");
+   scanf("%s", &d_name);
+   fp=fopen("contact.dll","r");
+   ft=fopen("temp.dat", "w");
+   
+   while(fread(&list,sizeof(list),1,fp) != 0){
+      if(strcmp(d_name,list.name)!=0)
+         fwrite(&list,sizeof(list),1,ft);
+   }
+   
+   fclose(fp);
+   fclose(ft);
+   remove("contact.dll");
+   rename("temp.dat","contact.dll");
+   
+   printf("\n\t\t삭제가 완료되었습니다.");
+}
+
+void easter_egg(){
+   system("cls");
+   printf("□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□\n");
+   printf("□■■■■□■□□■□□□■□□□□■□□■□□□■■■■■■■□■□□□\n");
+   printf("□□□□■□■□□■□□□■■■■■■□□■□□□□□□■□□□□■□□□\n");
+   printf("□□□□■□■□□■□□□■□□□□■□□■■■□□□□■□□□□■□□□\n");
+   printf("□□□□■□■□□■□□□■□□□□■□□■□□□□□□■□□□□■□□□\n");
+   printf("□□□□■□■□□■□□□■■■■■■□□■□□□□□□■□□□□■□□□\n");
+   printf("□□□□■□■■■■□□□□□□□□□□□□□□□□□■□■□□□■■■□\n");
+   printf("□□□■□□■□□■□□□□■■■■■■■■□□□□□■□■□□□■□□□\n");
+   printf("□□□■□□■□□■□□□□□□□□□□□■□□□□■□□□■□□■□□□\n");
+   printf("□□■□□□■□□■□□□□■■■■■■■■□□□□■□□□■□□■□□□\n");
+   printf("□■□□□□■□□■□□□□■□□□□□□□□□□■□□□□□■□■□□□\n");
+   printf("□□□□□□■□□■□□□□■■■■■■■■□□□□□□□□□□□■□□□\n");
+   printf("□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□\n");
+}
