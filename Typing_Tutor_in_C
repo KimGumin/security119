@@ -52,10 +52,10 @@ int main(void)
 
 void MainMenu(int* selection, int* roop) {
 
-	int line_width = 100; // cmd 길이
-	int start_string, check; // start_string : 문자열 위치 조정, check : _getch()함수 값 받아올때 사용
-	int i = 8; // 메뉴 그림 첫번째 행 8번 행에서 시작
-	int end = 70; // 메뉴 그림 마지막 열
+	int line_width = 100;
+	int start_string, check; // start_string : 문자열 위치 조정
+	int i = 8; 
+	int end = 70; 
 
 	HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
 
@@ -188,14 +188,10 @@ void MainMenu(int* selection, int* roop) {
 
 		case 50:
 			system("cls");
-			printf("2\n");
-			system("pause");
 			break;
 
 		case 51:
 			system("cls");
-			printf("3\n");
-			system("pause");
 			break;
 
 		case 52:
@@ -300,7 +296,7 @@ void select_user(void) { // <=> userselectmenu
 		}
 		i = 1, j = 6;
 
-		while (1) { // selection2의 값을 방향키로
+		while (1) { // 방향키 조정
 			check = _getch();
 
 			if (check == 224) {
@@ -388,7 +384,7 @@ void TypeMode(int selection2) { // <=> listLesson()
 			printf("3. Quit");
 		}
 
-		while (1) { // selection2의 값을 방향키로
+		while (1) { // 방향키 조정
 			check = _getch();
 
 			if (check == 224) {
@@ -442,8 +438,8 @@ void Test(int selection2, int selection3) { // <=> begin session
 	float average; // 평균 계산
 	float Count = 0; // 정확도 계산
 	float StrCount = 0; // 문자열 계산
-	int SpaceCount = 0; // 
-	double t0, t1, RapTime; // 시간 세기
+	int SpaceCount = 0; 
+	double t0, t1, RapTime; // 시간 
 	int line_width = 100;
 	char title1[] = "K O R E A N  T E S T";
 	char title2[] = "E N G L I S H  T E S T";
@@ -500,9 +496,9 @@ void Test(int selection2, int selection3) { // <=> begin session
 		printf("%s", temp8);
 	}
 
-	getchar(); // 오류 보정
+	getchar(); 
 	t0 = GetTickCount64(); // 시작 시간
-	SwitchingConsoleCursor(true, 1); // 커서 보이게 함
+	SwitchingConsoleCursor(true, 1); // 커서 등장
 
 	PrintString(hStdOut, WHITE, "");
 	GotoXY(for_design, 11);
@@ -562,7 +558,7 @@ void Result(int selection2, int selection3, float raptime, float average) {
 	char design1[] = "━━━━━━━━━━━━━";
 	int i;
 	int WPM, AllStrCount = 0;
-	char buffer[33]; // 문자열로 변환 시키는 용도
+	char buffer[33]; // 문자열로 변환
 	char Date[30], Time[30];
 
 	HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -576,7 +572,7 @@ void Result(int selection2, int selection3, float raptime, float average) {
 	GotoXY(for_design, row + 1);
 	printf("%s", design1);
 
-	FILE* fa = fopen("contact.txt", "r"); // selection2를 이용해 name 값 받아오기
+	FILE* fa = fopen("contact.txt", "r"); // name 값 받아오기
 	for (i = 0; i < selection2; i++) {
 		fgets(name, 50, fa);
 	}
@@ -599,7 +595,7 @@ void Result(int selection2, int selection3, float raptime, float average) {
 	time(&now_t);
 	now = localtime(&now_t);
 
-	_itoa(now->tm_mon, buffer, 10); // 날짜 문자열 화
+	_itoa(now->tm_mon, buffer, 10); // 날짜화
 	strcpy(Date, buffer);
 	strcat(Date, "m/");
 	_itoa(now->tm_mday, buffer, 10);
@@ -764,7 +760,7 @@ void AddNewUser(int* col_2) {
 	scanf("%s", &name);
 	SwitchingConsoleCursor(false, 1); // 커서 숨김
 
-	if (!CheckName(name_address)) { // 이름이 없다면 실행
+	if (!CheckName(name_address)) { // 이름이 없으면 실행
 		FILE* fa = fopen("contact.txt", "a");
 		fputs(name, fa);
 		fputs("\n", fa);
@@ -804,7 +800,7 @@ void DeleteNewUser(int* col_2) {
 	scanf("%s", name);
 	SwitchingConsoleCursor(false, 1); // 커서 숨김
 
-	if (CheckName(name_address)) { // 이름이 있다면 실행
+	if (CheckName(name_address)) { // 이름이 있으면 실행
 
 		strcpy(check, name);
 		strcat(check, "\n");
@@ -817,7 +813,7 @@ void DeleteNewUser(int* col_2) {
 		}
 		fclose(fb);
 
-		for (i; i < col; i++) { // 찾는 이름 제외한 나머지를 temp로 복사
+		for (i; i < col; i++) { // 대상 이름 제외한 나머지를 temp로 복사
 
 			FILE* fc = fopen("contact.txt", "r"); // contact.txt의 각 행의 문자열을 가져옴
 			for (j = 0; j < k; j++) {
@@ -849,7 +845,7 @@ void DeleteNewUser(int* col_2) {
 			}
 			fclose(ff);
 
-			FILE* fg = fopen("contact.txt", "a"); // 가져온 문자열을 임시 파일에 집어넣음
+			FILE* fg = fopen("contact.txt", "a"); // 가져온 문자열을 임시 파일에 저장
 			fputs(temp, fg);
 			fclose(fg);
 
