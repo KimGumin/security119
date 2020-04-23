@@ -334,7 +334,6 @@ public class SwingCalendar extends JFrame {
 		}
 
 		public void memoLoad() {
-
 			String readstr;
 
 			BufferedReader BR = null;
